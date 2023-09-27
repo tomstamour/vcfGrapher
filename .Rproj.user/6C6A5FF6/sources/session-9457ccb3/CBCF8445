@@ -1,0 +1,26 @@
+{
+    "id": "CBCF8445",
+    "path": "~/Labo_Belzile/Autre/scripts/vcfGrapher/vcfGrapher_package/vcfGrapher/R/vcfGrapher.R",
+    "project_path": "R/vcfGrapher.R",
+    "type": "r_source",
+    "hash": "0",
+    "contents": "",
+    "dirty": false,
+    "created": 1695728769842.0,
+    "source_on_save": false,
+    "relative_order": 1,
+    "properties": {
+        "source_window_id": "",
+        "Source": "Source",
+        "cursorPosition": "99,2",
+        "scrollLine": "82"
+    },
+    "folds": "20|47|80|0|\n100|56|157|0|\n176|53|235|0|\n247|94|303|0|\n317|92|388|0|\n401|49|458|0|\n470|60|526|0|\n538|95|603|0|\n",
+    "lastKnownWriteTime": 1695729529,
+    "encoding": "UTF-8",
+    "collab_server": "",
+    "source_window": "",
+    "last_content_update": 1695729529392,
+    "read_only": false,
+    "read_only_alternatives": []
+}
