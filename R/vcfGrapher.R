@@ -1,20 +1,16 @@
-#################
-# vcfGrapher
-#################
+#####################
+# vcfGrapher package
+#####################
 
-# setwd("Labo_Belzile/Autre/scripts/vcfGrapher/input_files/")
-# vcf_name <- "FastGBS_platypus_noScaf_onlyPASS_rmIndels_minMaxAll2_mac4_max_missing02.vcf"
 
-#-----------------------------------------------------------------
 
-#                 READ DEPTH per genomic position
 
-#-----------------------------------------------------------------
-# Plotting the average read depth as a function of genomic position
+
+#-------------  READ DEPTH per genomic position  -----------------
 
 #' Read depth per genomic position
 #'
-#' Plotting read depth per genomic position
+#' Plotting the average read depth as a function of genomic position
 #' @param vcf_name The name of your vcf file
 #' @return A plot for each chromosome with the position of the SNP in base pair on the x axis and the average number of reads on the y axis.
 #' @export
@@ -80,21 +76,17 @@ read_depth_per_position <- function(vcf_name) {
     labs(caption = paste("Input file:", vcf_name))
 }
 
-# To run the function
-# read_depth_per_position(vcf_name = "FastGBS_platypus_noScaf_onlyPASS_rmIndels_minMaxAll2_mac4_max_missing02.vcf")
-
-
-
 #-----------------------------------------------------------------
 
-#                 HETEROZYGOUSITY per SNP per genomic position
 
-#-----------------------------------------------------------------
-# Plotting the proportion of heterosigousity per SNP (or any variant) as a function of the position on the genome
+
+
+
+#-----------  HETEROZYGOUSITY per SNP per genomic position  ------
 
 #' Heterozigousity per genomic position
 #'
-#' Plotting the proportion of heterosigousity per SNP on the y axis as a function of the genomic position of the SNP
+#' Plotting the proportion of heterosigousity per SNP (or any variant) as a function of the position on the genome
 #' @param vcf_name The name of your vcf file
 #' @return A plot of heterosigousity ratio per SNP as a function of the position on the genome
 #' @export
@@ -157,20 +149,17 @@ SNP_heterosigousity_per_position <- function(vcf_name) {
     labs(caption = paste("Input file:", vcf_name))
 }
 
-# To run the function:
-# SNP_heterosigousity_per_position(vcf_name = "FastGBS_platypus_noScaf_onlyPASS_rmIndels_minMaxAll2_mac4_max_missing02.vcf")
-
-
 #-----------------------------------------------------------------
 
-#                 HETEROZYGOUSITY per SNP histogram
 
-#-----------------------------------------------------------------
-# Plotting an histogram of the proportion of heterosigousity per SNP (or any variant)
+
+
+
+#---------- HETEROZYGOUSITY per SNP histogram --------------------
 
 #' Histogram of the proportion of heterozigousity per SNP
 #'
-#' Plotting an histogram for the proportion of heterosigousity per SNP
+#' Plotting an histogram of the proportion of heterosigousity per SNP (or any variant)
 #' @param vcf_name The name of your vcf file
 #' @return An histogram of heterosigousity ratio per SNP
 #' @export
@@ -235,16 +224,21 @@ SNP_heterosigousity_histogram <- function(vcf_name) {
     labs(caption = paste("Input file:", vcf_name))
 }
 
-# To run the function:
-# SNP_heterosigousity_histogram(vcf_name = "FastGBS_platypus_noScaf_onlyPASS_rmIndels_minMaxAll2_mac4_max_missing02.vcf")
-
-
 #-----------------------------------------------------------------
 
-#               HETEROZYGOUSITY per sample histogram
 
-#-----------------------------------------------------------------
-# Plotting an histogram of the proportion of heterosigousity per sample
+
+
+
+#---------  HETEROZYGOUSITY per sample histogram ----------------
+
+#' Histogram of the proportion of heterozigousity per sample
+#'
+#' Plotting an histogram of the proportion of heterosigousity per sample
+#' @param vcf_name The name of your vcf file
+#' @param Pattern_to_highlight_in_sample_name Choose a character string in the name of your samples. The samples for which the string was found wil be highlighted in your plot.
+#' @return An histogram of heterosigousity ratio per sample
+#' @export
 Samples_heterosigousity_histogram <- function(vcf_name, Pattern_to_highlight_in_sample_name) {
 
   # Loading the necessary packages
@@ -303,18 +297,21 @@ Samples_heterosigousity_histogram <- function(vcf_name, Pattern_to_highlight_in_
     labs(caption = paste("Input file:", vcf_name))
 }
 
-# To run the function:
-# Samples_heterosigousity_histogram(vcf_name = "FastGBS_platypus_noScaf_onlyPASS_rmIndels_minMaxAll2_mac4_max_missing02.vcf")
-
-
-
 #-----------------------------------------------------------------
 
-#               Box plot HETEROZYGOUSITY per sample
 
-#-----------------------------------------------------------------
-# Plotting a boxplot of the proportion of heterosigousity per sample
-# Pattern_to_highlight_in_sample_name : will color the dots on the boxplot regarding the patern has been found in the name or not
+
+
+
+#-------- Box plot HETEROZYGOUSITY per sample --------------------
+
+#' Plotting a boxplot of the proportion of heterosigousity per sample
+#'
+#' Plotting a boxplot of the proportion of heterosigousity per sample
+#' @param vcf_name The name of your vcf file
+#' @param Pattern_to_highlight_in_sample_name Choose a character string in the name of your samples. The samples for which the string was found wil be highlighted in your plot.
+#' @return A boxplot of heterosigousity ratio per sample
+#' @export
 Samples_heterosigousity_boxplot <- function(vcf_name, Pattern_to_highlight_in_sample_name) {
 
   # Loading the necessary packages
@@ -388,17 +385,20 @@ Samples_heterosigousity_boxplot <- function(vcf_name, Pattern_to_highlight_in_sa
     labs(caption = paste("Input file:", vcf_name))
 }
 
-# To run the function:
-# Samples_heterosigousity_boxplot(vcf_name = "FastGBS_platypus_noScaf_onlyPASS_rmIndels_minMaxAll2_mac4_max_missing02.vcf", Pattern_to_highlight_in_sample_name = "01A")
-
-
-
 #-----------------------------------------------------------------
 
-#                 MISSING DATA per SNP per position
 
-#-----------------------------------------------------------------
-# Plotting the proportion of missing data per SNP (or any variant) as a function of the position on the genome
+
+
+
+#------- MISSING DATA per SNP per position -----------------------
+
+#' Missing data as a function of the genomic  position
+#'
+#' Plotting the proportion of missing data per SNP (or any variant) as a function of the position on the genome
+#' @param vcf_name The name of your vcf file
+#' @return A plot of the proportion of missing data per genomic position
+#' @export
 Missing_data_per_position <- function(vcf_name) {
 
   # Loading the necessary packages
@@ -458,16 +458,20 @@ Missing_data_per_position <- function(vcf_name) {
     labs(caption = paste("Input file:", vcf_name))
 }
 
-# To run the function:
-# Missing_data_per_position(vcf_name = "FastGBS_platypus_noScaf_onlyPASS_rmIndels_minMaxAll2_mac4_max_missing02.vcf")
-
-
 #-----------------------------------------------------------------
 
-#               histogram MISSING DATA per sample
 
-#-----------------------------------------------------------------
-# Plotting an histogram of the proportion of missing data per sample
+
+
+
+#------- Histogram MISSING DATA per sample  ----------------------
+
+#' Histogram of the proportion of missing data per sample
+#'
+#' Plotting an histogram of the proportion of missing data per sample
+#' @param vcf_name The name of your vcf file
+#' @return An histogram of the proportion of missing data per sample
+#' @export
 Samples_proportion_missing_histogram <- function(vcf_name) {
 
   # Loading the necessary packages
@@ -526,16 +530,21 @@ Samples_proportion_missing_histogram <- function(vcf_name) {
     labs(caption = paste("Input file:", vcf_name))
 }
 
-# To run the function
-# Samples_proportion_missing_histogram(vcf_name = "FastGBS_platypus_noScaf_onlyPASS_rmIndels_minMaxAll2_mac4_max_missing02.vcf")
-
 #-----------------------------------------------------------------
 
-#               Box plot MISSING DATA per sample
 
-#-----------------------------------------------------------------
-# Plotting a boxplot of the proportion of missing data per sample
-# Pattern_to_highlight_in_sample_name : will color the dots on the boxplot regarding the patern has been found in the name or not
+
+
+
+#-------- Box plot MISSING DATA per sample -----------------------
+
+#' Boxplot of the proportion of missing data per sample
+#'
+#' Plotting a boxplot of the proportion of missing data per sample
+#' @param vcf_name The name of your vcf file
+#' @param Pattern_to_highlight_in_sample_name Choose a character string in the name of your samples. The samples for which the string was found wil be highlighted in your plot.
+#' @return A boxplot of the proportion of missing data per sample
+#' @export
 Samples_proportion_missing_boxplot <- function(vcf_name, Pattern_to_highlight_in_sample_name) {
 
   # Loading the necessary packages
@@ -603,6 +612,8 @@ Samples_proportion_missing_boxplot <- function(vcf_name, Pattern_to_highlight_in
     labs(caption = paste("Input file:", vcf_name))
 }
 
-# To run the function:
-# Samples_proportion_missing_boxplot(vcf_name = "FastGBS_platypus_noScaf_onlyPASS_rmIndels_minMaxAll2_mac4_max_missing02.vcf", Pattern_to_highlight_in_sample_name = "01A")
+#-----------------------------------------------------------------
+
+
+
 
