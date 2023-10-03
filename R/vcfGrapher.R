@@ -72,7 +72,7 @@ read_depth_per_position <- function(vcf_name) {
     facet_wrap(~Chromosome) +
     labs(y= "Average read depth", x = "Position (bp)") +
     ggtitle("Average read depth as a function of genomic position") +
-    theme(axis.text = element_text(size = 15), axis.title = element_text(size = 20), plot.title = element_text(size = 25)) +
+    theme(axis.text.x = element_text(angle = 90),axis.text = element_text(size = 10), axis.title = element_text(size = 20), plot.title = element_text(size = 25)) +
     labs(caption = paste("Input file:", vcf_name))
 }
 
@@ -145,7 +145,7 @@ SNP_heterosigousity_per_position <- function(vcf_name) {
     facet_wrap(~CHROM)+
     labs(y= "Proportion heterosigousity", x = "Position (bp)") +
     ggtitle("Proportion heterosigousity as a function of genomic position") +
-    theme(axis.text = element_text(size = 15), axis.title = element_text(size = 20), plot.title = element_text(size = 25)) +
+    theme(axis.text.x = element_text(angle = 90),axis.text = element_text(size = 10), axis.title = element_text(size = 20), plot.title = element_text(size = 25)) +
     labs(caption = paste("Input file:", vcf_name))
 }
 
@@ -454,7 +454,7 @@ Missing_data_per_position <- function(vcf_name) {
     facet_wrap(~CHROM)+
     labs(y= "Proportion missing data", x = "Position (bp)") +
     ggtitle("Proportion of missing data as a function of genomic position") +
-    theme(axis.text = element_text(size = 15), axis.title = element_text(size = 20), plot.title = element_text(size = 25)) +
+    theme(axis.text.x = element_text(angle = 90),axis.text = element_text(size = 10), axis.title = element_text(size = 20), plot.title = element_text(size = 25)) +
     labs(caption = paste("Input file:", vcf_name))
 }
 
