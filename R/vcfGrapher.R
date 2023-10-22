@@ -68,11 +68,11 @@ read_depth_per_position <- function(vcf_name) {
   # Plotting the read depth as a function of genomic position
   library(ggplot2)
   ggplot(data = average_data_per_position, aes(x = Position, y = average_data)) +
-    geom_point() +
+    geom_point(shape = 1) +
     facet_wrap(~Chromosome) +
     labs(y= "Average read depth", x = "Position (bp)") +
     ggtitle("Average read depth as a function of genomic position") +
-    theme(axis.text.x = element_text(angle = 90),axis.text = element_text(size = 10), axis.title = element_text(size = 20), plot.title = element_text(size = 25)) +
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5), axis.text = element_text(size = 10), axis.title = element_text(size = 15), plot.title = element_text(size = 20)) +
     labs(caption = paste("Input file:", vcf_name))
 }
 
@@ -141,11 +141,11 @@ SNP_heterosigousity_per_position <- function(vcf_name) {
 
   # Plotting the proportion of heterozigousity per SNP (variant)
   ggplot(data = data_genotypes_perSNPs, aes(x = Position, y = Proportion_of_Hetero)) +
-    geom_point() +
+    geom_point(shape = 1) +
     facet_wrap(~CHROM)+
     labs(y= "Proportion heterosigousity", x = "Position (bp)") +
     ggtitle("Proportion heterosigousity as a function of genomic position") +
-    theme(axis.text.x = element_text(angle = 90),axis.text = element_text(size = 10), axis.title = element_text(size = 20), plot.title = element_text(size = 25)) +
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5), axis.text = element_text(size = 10), axis.title = element_text(size = 15), plot.title = element_text(size = 20)) +
     labs(caption = paste("Input file:", vcf_name))
 }
 
@@ -220,7 +220,7 @@ SNP_heterosigousity_histogram <- function(vcf_name) {
     geom_histogram() +
     labs(y= "Count", x = "Proportion of heterosigousity") +
     ggtitle("Distribution of proportion heterosigousity per SNP") +
-    theme(axis.text = element_text(size = 15), axis.title = element_text(size = 20), plot.title = element_text(size = 25)) +
+    theme(axis.text = element_text(size = 10), axis.title = element_text(size = 15), plot.title = element_text(size = 20)) +
     labs(caption = paste("Input file:", vcf_name))
 }
 
@@ -239,7 +239,7 @@ SNP_heterosigousity_histogram <- function(vcf_name) {
 #' @param Pattern_to_highlight_in_sample_name Choose a character string in the name of your samples. The samples for which the string was found wil be highlighted in your plot.
 #' @return An histogram of heterosigousity ratio per sample
 #' @export
-Samples_heterosigousity_histogram <- function(vcf_name, Pattern_to_highlight_in_sample_name) {
+Samples_heterosigousity_histogram <- function(vcf_name) {
 
   # Loading the necessary packages
   library(data.table)
@@ -293,7 +293,7 @@ Samples_heterosigousity_histogram <- function(vcf_name, Pattern_to_highlight_in_
     geom_histogram() +
     labs(y= "Count", x = "Proportion of heterosigousity") +
     ggtitle("Distribution of proportion heterosigousity per sample") +
-    theme(axis.text = element_text(size = 15), axis.title = element_text(size = 20), plot.title = element_text(size = 25)) +
+    theme(axis.text = element_text(size = 10), axis.title = element_text(size = 15), plot.title = element_text(size = 20)) +
     labs(caption = paste("Input file:", vcf_name))
 }
 
@@ -309,7 +309,7 @@ Samples_heterosigousity_histogram <- function(vcf_name, Pattern_to_highlight_in_
 #'
 #' Plotting a boxplot of the proportion of heterosigousity per sample
 #' @param vcf_name The name of your vcf file
-#' @param Pattern_to_highlight_in_sample_name Choose a character string in the name of your samples. The samples for which the string was found wil be highlighted in your plot.
+#' @param Pattern_to_highlight_in_sample_name Choose a character string in the name of your samples or set to NA. The samples for which the string was found will be highlighted in your plot.
 #' @return A boxplot of heterosigousity ratio per sample
 #' @export
 Samples_heterosigousity_boxplot <- function(vcf_name, Pattern_to_highlight_in_sample_name) {
@@ -361,28 +361,43 @@ Samples_heterosigousity_boxplot <- function(vcf_name, Pattern_to_highlight_in_sa
   by_samples_metrics <- data.frame(Sample_name = colnames(vcf_data)[10:ncol(vcf_data)])
   by_samples_metrics$Proportion_heterosigousity <- colSums(data_matrix2 == "1/0" | data_matrix2 == "0/1", na.rm = FALSE) / (nrow(data_matrix2) - colSums(data_matrix2 == "./.", na.rm = FALSE))
 
-  # Tagging rows for the presence or absence of the desired pattern in the sample name
-  rows <- grep(Pattern_to_highlight_in_sample_name, by_samples_metrics$Sample_name)
-  by_samples_metrics$pattern_presence <- rep("NO", nrow(by_samples_metrics))
-  by_samples_metrics[rows, "pattern_presence"] <- "YES"
-
-  # Calculatin quartile metrics that will be used in the plot
+  # Calculating quartile metrics that will be used in the plot
   Q3 <- summary(by_samples_metrics[["Proportion_heterosigousity"]])[5]
   Q1 <- summary(by_samples_metrics[["Proportion_heterosigousity"]])[2]
   IQR <- Q3-Q1
   treshold <- Q3+(1.5*IQR)
 
-  library(ggplot2)
-  ggplot(data = by_samples_metrics, aes(y = Proportion_heterosigousity, x = "")) +
-    geom_boxplot(outlier.shape = NA) +
-    geom_jitter(aes(color = pattern_presence), width = 0.4, shape = 1, size = 5) +
-    geom_hline(aes(yintercept= treshold, linetype = "Q3 + 1.5*IQR"), colour= "blue") +
-    ggtitle("Proportion heterosigousity per sample") +
-    theme_classic() +
-    theme(text = element_text(size = 20)) +
-    labs(x = "") +
-    scale_fill_discrete(name = "New Legend Title") +
-    labs(caption = paste("Input file:", vcf_name))
+  # Testing if the Pattern_to_highlight_in_sample_name is NA or not and running the appropriate plot
+  if (is.na(Pattern_to_highlight_in_sample_name)) {
+
+    ggplot(data = by_samples_metrics, aes(y = Proportion_heterosigousity, x = "")) +
+      geom_boxplot(outlier.shape = NA) +
+      geom_jitter(width = 0.4, shape = 1, size = 5) +
+      geom_hline(aes(yintercept = treshold, linetype = "Q3 + 1.5*IQR"), colour= "blue") +
+      ggtitle("Proportion heterosigousity per sample") +
+      theme_classic() +
+      theme(axis.text = element_text(size = 10), axis.title = element_text(size = 15), plot.title = element_text(size = 20)) +
+      labs(x = "") +
+      labs(caption = paste("Input file:", vcf_name))
+
+  } else {
+
+    # Tagging rows for the presence or absence of the desired pattern in the sample name
+    rows <- grep(Pattern_to_highlight_in_sample_name, by_samples_metrics$Sample_name)
+    by_samples_metrics$pattern_presence <- rep("NO", nrow(by_samples_metrics))
+    by_samples_metrics[rows, "pattern_presence"] <- "YES"
+
+    ggplot(data = by_samples_metrics, aes(y = Proportion_heterosigousity, x = "")) +
+      geom_boxplot(outlier.shape = NA) +
+      geom_jitter(aes(color = pattern_presence), width = 0.4, shape = 1, size = 5) +
+      geom_hline(aes(yintercept = treshold, linetype = "Q3 + 1.5*IQR"), colour= "blue") +
+      ggtitle("Proportion heterosigousity per sample") +
+      theme_classic() +
+      theme(axis.text = element_text(size = 10), axis.title = element_text(size = 15), plot.title = element_text(size = 20)) +
+      labs(x = "") +
+      labs(caption = paste("Input file:", vcf_name))
+
+  }
 }
 
 #-----------------------------------------------------------------
@@ -450,11 +465,11 @@ Missing_data_per_position <- function(vcf_name) {
 
   # Plotting the proportion of heterozigousity per SNP (variant)
   ggplot(data = data_genotypes_perSNPs, aes(x = Position, y = Proportion_of_missing)) +
-    geom_point() +
+    geom_point(shape = 1) +
     facet_wrap(~CHROM)+
     labs(y= "Proportion missing data", x = "Position (bp)") +
     ggtitle("Proportion of missing data as a function of genomic position") +
-    theme(axis.text.x = element_text(angle = 90),axis.text = element_text(size = 10), axis.title = element_text(size = 20), plot.title = element_text(size = 25)) +
+    theme(axis.text.x = element_text(angle = 90, vjust = 0.5),axis.text = element_text(size = 10), axis.title = element_text(size = 15), plot.title = element_text(size = 20)) +
     labs(caption = paste("Input file:", vcf_name))
 }
 
@@ -526,7 +541,7 @@ Samples_proportion_missing_histogram <- function(vcf_name) {
     geom_histogram() +
     labs(y= "Count", x = "Proportion of missing data") +
     ggtitle("Distribution of proportion missing data per sample") +
-    theme(axis.text = element_text(size = 15), axis.title = element_text(size = 20), plot.title = element_text(size = 25)) +
+    theme(axis.text = element_text(size = 10), axis.title = element_text(size = 15), plot.title = element_text(size = 20)) +
     labs(caption = paste("Input file:", vcf_name))
 }
 
@@ -542,7 +557,7 @@ Samples_proportion_missing_histogram <- function(vcf_name) {
 #'
 #' Plotting a boxplot of the proportion of missing data per sample
 #' @param vcf_name The name of your vcf file
-#' @param Pattern_to_highlight_in_sample_name Choose a character string in the name of your samples. The samples for which the string was found wil be highlighted in your plot.
+#' @param Pattern_to_highlight_in_sample_name Choose a character string in the name of your samples or set to NA. The samples for which the string was found wil be highlighted in your plot.
 #' @return A boxplot of the proportion of missing data per sample
 #' @export
 Samples_proportion_missing_boxplot <- function(vcf_name, Pattern_to_highlight_in_sample_name) {
@@ -590,30 +605,39 @@ Samples_proportion_missing_boxplot <- function(vcf_name, Pattern_to_highlight_in
   vector2 <- sapply(sub_mat2, "[", 1)
   data_matrix2 <- matrix(vector2, nrow = nrow(vcf_matrix), ncol = ncol(vcf_matrix))
 
-  # creating a vector of heterosigousity ratio for all samples
+  # creating a vector of proportion missing data ratio for all samples
   by_samples_metrics <- data.frame(Sample_name = colnames(vcf_data)[10:ncol(vcf_data)])
   by_samples_metrics$Proportion_missing <- colSums(data_matrix2 == "./.", na.rm = FALSE) / nrow(data_matrix2)
 
-  # Tagging rows for the presence or absence of the desired pattern in the sample name
-  rows <- grep(Pattern_to_highlight_in_sample_name, by_samples_metrics$Sample_name)
-  by_samples_metrics$pattern_presence <- rep("NO", nrow(by_samples_metrics))
-  by_samples_metrics[rows, "pattern_presence"] <- "YES"
+  # Testing if the Pattern_to_highlight_in_sample_name is NA or not and running the appropriate plot
+  if (is.na(Pattern_to_highlight_in_sample_name)) {
 
-  # Plotting the boxplot and jitter
-  library(ggplot2)
-  ggplot(data = by_samples_metrics, aes(y = Proportion_missing, x = "")) +
-    geom_boxplot(outlier.shape = NA) +
-    geom_jitter(aes(color = pattern_presence), width = 0.4, shape = 1, size = 5) +
-    ggtitle("Proportion missing data per sample") +
-    theme_classic() +
-    theme(text = element_text(size = 20)) +
-    labs(x = "") +
-    scale_fill_discrete(name = "New Legend Title") +
-    labs(caption = paste("Input file:", vcf_name))
+    ggplot(data = by_samples_metrics, aes(y = Proportion_missing, x = "")) +
+      geom_boxplot(outlier.shape = NA) +
+      geom_jitter(width = 0.4, shape = 1, size = 5) +
+      ggtitle("Proportion missing data per sample") +
+      theme_classic() +
+      theme(axis.text = element_text(size = 10), axis.title = element_text(size = 15), plot.title = element_text(size = 20)) +
+      labs(x = "") +
+      labs(caption = paste("Input file:", vcf_name))
+
+  } else {
+
+    # Tagging rows for the presence or absence of the desired pattern in the sample name
+    rows <- grep(Pattern_to_highlight_in_sample_name, by_samples_metrics$Sample_name)
+    by_samples_metrics$pattern_presence <- rep("NO", nrow(by_samples_metrics))
+    by_samples_metrics[rows, "pattern_presence"] <- "YES"
+
+    ggplot(data = by_samples_metrics, aes(y = Proportion_missing, x = "")) +
+      geom_boxplot(outlier.shape = NA) +
+      geom_jitter(aes(color = pattern_presence), width = 0.4, shape = 1, size = 5) +
+      ggtitle("Proportion missing data per sample") +
+      theme_classic() +
+      theme(axis.text = element_text(size = 10), axis.title = element_text(size = 15), plot.title = element_text(size = 20)) +
+      labs(x = "") +
+      labs(caption = paste("Input file:", vcf_name))
+
+  }
 }
 
 #-----------------------------------------------------------------
-
-
-
-
