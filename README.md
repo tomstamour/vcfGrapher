@@ -14,8 +14,10 @@ Installation method 2 (devtools not needed)
 source("https://raw.githubusercontent.com/tomstamour/vcfGrapher/main/R/vcfGrapher.R")
 ```
 # Usage
+### Loading the package
 library("vcfGrapher")
 <br>
+### Running the function to plot average read dept as a function of genomic position
 read_depth_per_position(vcf_name = "Genotype_file.vcf")
 
 ![Alt text](/images/Read_depth_per_genomic_position.png)
