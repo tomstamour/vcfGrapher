@@ -16,4 +16,4 @@ source("https://raw.githubusercontent.com/tomstamour/vcfGrapher/main/R/vcfGraphe
 # Usage
 library("vcfGrapher")
 read_depth_per_position(vcf_name = "Genotype_file.vcf")
-![Alt text](/posts/path/to/Read_depth_per_genomic_position.png)
+![Alt text](/vcfGrapher/images/Read_depth_per_genomic_position.png)
