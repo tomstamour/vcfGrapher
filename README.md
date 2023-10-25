@@ -14,4 +14,6 @@ Installation method 2 (devtools not needed)
 source("https://raw.githubusercontent.com/tomstamour/vcfGrapher/main/R/vcfGrapher.R")
 ```
 # Usage
-To use vcfGrapher
+library("vcfGrapher")
+read_depth_per_position(vcf_name = "Genotype_file.vcf")
+![Alt text](/posts/path/to/Read_depth_per_genomic_position.png)
