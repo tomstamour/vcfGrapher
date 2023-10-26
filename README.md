@@ -20,6 +20,7 @@ library("vcfGrapher")
 ```
 <br>
 #### Running the function to plot the average read dept as a function of genomic position
+
 ```
 read_depth_per_position(vcf_name = "Genotype_file.vcf")
 ```
