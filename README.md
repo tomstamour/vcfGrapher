@@ -19,6 +19,7 @@ source("https://raw.githubusercontent.com/tomstamour/vcfGrapher/main/R/vcfGraphe
 library("vcfGrapher")
 ```
 <br>
+
 #### Running the function to plot the average read dept as a function of genomic position
 
 ```
