@@ -21,14 +21,19 @@ library("vcfGrapher")
 data <- "Your_genotypes_file.vcf"
 
 read_depth_per_position(vcf_name = data)
-\
+
 SNP_heterosigousity_per_position(vcf_name = data)
 
 SNP_heterosigousity_histogram(vcf_name = data)
+
 Samples_heterosigousity_histogram(vcf_name = data)
+
 Samples_heterosigousity_boxplot(vcf_name = data)
+
 Missing_data_per_position(vcf_name = data)
+
 Samples_proportion_missing_histogram(vcf_name = data)
+
 Samples_proportion_missing_boxplot(vcf_name = data)
 
 ```
