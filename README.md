@@ -28,13 +28,13 @@ SNP_heterosigousity_histogram(vcf_name = data)
 
 Samples_heterosigousity_histogram(vcf_name = data)
 
-Samples_heterosigousity_boxplot(vcf_name = data)
+Samples_heterosigousity_boxplot(vcf_name = data, Pattern_to_highlight_in_sample_name = NA)
 
 Missing_data_per_position(vcf_name = data)
 
 Samples_proportion_missing_histogram(vcf_name = data)
 
-Samples_proportion_missing_boxplot(vcf_name = data)
+Samples_proportion_missing_boxplot(vcf_name = data, Pattern_to_highlight_in_sample_name = NA)
 
 ```
 
