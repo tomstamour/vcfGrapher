@@ -17,7 +17,9 @@ source("https://raw.githubusercontent.com/tomstamour/vcfGrapher/main/R/vcfGraphe
 #### Loading the package and running the functions
 ```
 library("vcfGrapher")
+
 data <- "Your_genotypes_file.vcf"
+
 read_depth_per_position(vcf_name = data)
 SNP_heterosigousity_per_position(vcf_name = data)
 SNP_heterosigousity_histogram(vcf_name = data)
