@@ -14,17 +14,22 @@ Installation method 2 (devtools not needed)
 source("https://raw.githubusercontent.com/tomstamour/vcfGrapher/main/R/vcfGrapher.R")
 ```
 # Usage
-#### Loading the package
+#### Loading the package and running the functions
 ```
 library("vcfGrapher")
-```
-<br>
+data <- "Your_genotypes_file.vcf"
+read_depth_per_position(vcf_name = data)
+SNP_heterosigousity_per_position(vcf_name = data)
+SNP_heterosigousity_histogram(vcf_name = data)
+Samples_heterosigousity_histogram(vcf_name = data)
+Samples_heterosigousity_boxplot(vcf_name = data)
+Missing_data_per_position(vcf_name = data)
+Samples_proportion_missing_histogram(vcf_name = data)
+Samples_proportion_missing_boxplot(vcf_name = data)
 
-#### Running the function to plot the average read dept as a function of genomic position
+```
 
-```
-read_depth_per_position(vcf_name = "Genotype_file.vcf")
-```
+
 <br>
 
 #### An example of the output produced by the read_depth_per_position function
